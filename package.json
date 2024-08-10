@@ -60,7 +60,6 @@
     "fs-extra": "^11.1.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
-    "jest-chrome": "^0.8.0",
     "jest-environment-jsdom": "^29.5.0",
     "nano-staged": "^0.8.0",
     "npm-run-all2": "^6.0.5",
@@ -75,5 +74,6 @@
   },
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/nano-staged"
-  }
+  },
+  "packageManager": "npm@10.8.1+sha512.0e9d42e92bd2318408ed81eaff2da5f78baf23ee7d12a6eed44a6e2901d0f29d7ab715d1b918ade601f72e769a824d9a5c322383f22bbbda5dd396e79de2a077"
 }
