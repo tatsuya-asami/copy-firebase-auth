@@ -64,13 +64,11 @@ export const Content = () => {
       return;
     }
 
-    // element.setAttribute('value', message.token);
-    // element.setAttribute('value', message.token);
-    element.addEventListener('input', () => {
-      element.value = message.token;
-    });
+    element.setAttribute('value', message.token);
+    // inputイベントを発火させないとクリックできない
+    const event = new Event('input', { bubbles: true });
+    element.dispatchEvent(event);
 
-    // submit the form by click button
     const button = document.querySelector(
       'button.btn.modal-btn.auth.authorize.button[aria-label="Apply credentials"]'
     ) as HTMLButtonElement | null;
