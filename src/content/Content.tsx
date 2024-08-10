@@ -17,9 +17,8 @@ export const Content = () => {
       // @ts-expect-error target is not defined
       const db = event.target?.result as IDBDatabase | undefined;
 
-      if (!db) {
-        await removeToken();
-        throw new Error('firebaseLocalStorageDb not found');
+      if (!db || db.objectStoreNames.length === 0) {
+        return;
       }
 
       const transaction = db.transaction([STORAGE_NAME], 'readonly');
