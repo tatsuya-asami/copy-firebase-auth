@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { debounce } from 'lodash-es';
 import { twind, config, cssom, observe, stringify } from './twind';
 import { proxyStore } from '../app/proxyStore';
-import Content from './Content';
+import { Content } from './Content';
 
 proxyStore.ready().then(() => {
   const contentRoot = document.createElement('div');

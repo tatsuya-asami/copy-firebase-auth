@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useBucket } from '@extend-chrome/storage';
 
-const Content = () => {
+export const Content = () => {
   const INDEXED_DB_NAME = 'firebaseLocalStorageDb';
   const STORAGE_NAME = 'firebaseLocalStorage';
   const bucket = useBucket<{ token: string }>('local', 'token');
@@ -12,7 +12,6 @@ const Content = () => {
     request.onsuccess = (event) => {
       // @ts-expect-error target is not defined
       const db = event.target?.result as IDBDatabase;
-      console.log(db.objectStoreNames);
 
       const transaction = db.transaction([STORAGE_NAME], 'readonly');
       const objectStore = transaction.objectStore(STORAGE_NAME);
@@ -23,7 +22,6 @@ const Content = () => {
         const value = result[0].value;
         const accessToken = value.stsTokenManager.accessToken;
         bucket.set({ token: accessToken });
-        console.log(accessToken);
         console.log(await bucket.get());
       };
 
@@ -43,5 +41,3 @@ const Content = () => {
 
   return null;
 };
-
-export default Content;
