@@ -5,7 +5,9 @@ export const Popup = () => {
   const bucket = useBucket<{ token: string }>('local', 'token');
 
   const copyToken = async () => {
+    console.log('copyToken');
     const { token } = await bucket.get('token');
+    console.log('token', token);
     if (!token) {
       alert('No token found');
       return;

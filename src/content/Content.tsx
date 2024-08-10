@@ -6,12 +6,21 @@ export const Content = () => {
   const STORAGE_NAME = 'firebaseLocalStorage';
   const bucket = useBucket<{ token: string }>('local', 'token');
 
+  const removeToken = useCallback(() => {
+    return bucket.remove('token');
+  }, [bucket]);
+
   const getToken = useCallback(() => {
     const request = window.indexedDB.open(INDEXED_DB_NAME);
 
-    request.onsuccess = (event) => {
+    request.onsuccess = async (event) => {
       // @ts-expect-error target is not defined
-      const db = event.target?.result as IDBDatabase;
+      const db = event.target?.result as IDBDatabase | undefined;
+
+      if (!db) {
+        await removeToken();
+        throw new Error('firebaseLocalStorageDb not found');
+      }
 
       const transaction = db.transaction([STORAGE_NAME], 'readonly');
       const objectStore = transaction.objectStore(STORAGE_NAME);
@@ -19,21 +28,27 @@ export const Content = () => {
       objectStore.getAll().onsuccess = async (event) => {
         // @ts-expect-error target is not defined
         const result = event.target?.result;
-        const value = result[0].value;
+        const value = result?.[0]?.value;
+        if (!value) {
+          await removeToken();
+          console.log('No token found');
+          return;
+        }
         const accessToken = value.stsTokenManager.accessToken;
         bucket.set({ token: accessToken });
-        console.log(await bucket.get());
       };
 
-      objectStore.getAll().onerror = function (event) {
-        console.error('Error fetching data from firebaseLocalStorage:', event);
+      objectStore.getAll().onerror = async (event) => {
+        await removeToken();
+        console.log('Error getting token:', event);
       };
     };
 
-    request.onerror = function (event) {
-      console.error('Error opening firebaseLocalStorageDb:', event);
+    request.onerror = async (event) => {
+      await removeToken();
+      throw new Error(`Error opening firebaseLocalStorageDb: ${event}`);
     };
-  }, [bucket]);
+  }, [bucket, removeToken]);
 
   useEffect(() => {
     getToken();
