@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useBucket } from '@extend-chrome/storage';
+import { runtime } from 'webextension-polyfill';
 
 export const Content = () => {
   const INDEXED_DB_NAME = 'firebaseLocalStorageDb';
@@ -53,5 +54,31 @@ export const Content = () => {
     getToken();
   }, [getToken]);
 
+  runtime.onMessage.addListener(async (message) => {
+    if (message.type !== 'token-copied') {
+      return;
+    }
+    const element = document.getElementById('api_key_value') as HTMLInputElement | null;
+    if (!element) {
+      console.log('element not found');
+      return;
+    }
+
+    // element.setAttribute('value', message.token);
+    // element.setAttribute('value', message.token);
+    element.addEventListener('input', () => {
+      element.value = message.token;
+    });
+
+    // submit the form by click button
+    const button = document.querySelector(
+      'button.btn.modal-btn.auth.authorize.button[aria-label="Apply credentials"]'
+    ) as HTMLButtonElement | null;
+    if (!button) {
+      console.log('button not found');
+      return;
+    }
+    button.click();
+  });
   return null;
 };

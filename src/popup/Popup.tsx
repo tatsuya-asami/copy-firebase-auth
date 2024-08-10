@@ -1,5 +1,6 @@
 import { useBucket } from '@extend-chrome/storage';
 import { useState } from 'react';
+import { runtime } from 'webextension-polyfill';
 
 export const Popup = () => {
   document.body.className = 'w-[10rem] h-[6rem]';
@@ -19,6 +20,8 @@ export const Popup = () => {
     await navigator.clipboard.writeText(token);
     setMessage({ type: 'success', message: 'Token copied' });
     setTimeout(() => setMessage({ type: 'success', message: '' }), 5000);
+
+    await runtime.sendMessage({ type: 'token-copied', token });
   };
 
   return (
