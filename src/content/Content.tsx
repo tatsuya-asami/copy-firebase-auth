@@ -58,6 +58,17 @@ export const Content = () => {
     if (message.type !== 'token-copied') {
       return;
     }
+    const authorizeOpenButton = document.querySelector(
+      'button.btn.authorize.unlocked'
+    ) as HTMLButtonElement | null;
+    if (!authorizeOpenButton) {
+      console.log('authorizeOpenButton not found');
+      return;
+    }
+    authorizeOpenButton.click();
+
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const element = document.getElementById('api_key_value') as HTMLInputElement | null;
     if (!element) {
       console.log('element not found');
