@@ -54,7 +54,7 @@ export const Content = () => {
     getToken();
   }, [getToken]);
 
-  runtime.onMessage.addListener(async (message) => {
+  runtime.onMessage.addListener(async (message, _, sendResponse) => {
     if (message.type !== 'set-token') {
       return;
     }
@@ -85,7 +85,7 @@ export const Content = () => {
       'button.btn.modal-btn.auth.authorize.button[aria-label="Apply credentials"]'
     ) as HTMLButtonElement | null;
     if (!button) {
-      console.log('button not found');
+      console.log('Authorize button not found');
       return;
     }
     button.click();
@@ -102,6 +102,8 @@ export const Content = () => {
     }
 
     closeButton.click();
+    sendResponse();
+    return true;
   });
   return null;
 };
