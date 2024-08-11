@@ -2,6 +2,9 @@ import { useCallback, useEffect } from 'react';
 import { useBucket } from '@extend-chrome/storage';
 import { runtime } from 'webextension-polyfill';
 
+const TARGET_HOSTNAMES = ['localhost'];
+const isTargetHostname = TARGET_HOSTNAMES.includes(window.location.hostname);
+
 export const Content = () => {
   const INDEXED_DB_NAME = 'firebaseLocalStorageDb';
   const STORAGE_NAME = 'firebaseLocalStorage';
@@ -51,6 +54,9 @@ export const Content = () => {
   }, [bucket, removeToken]);
 
   useEffect(() => {
+    if (!isTargetHostname) {
+      return;
+    }
     getToken();
   }, [getToken]);
 
