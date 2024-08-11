@@ -41,6 +41,15 @@ export const Popup = () => {
     }, 700);
   };
 
+  const deleteToken = async () => {
+    await bucket.remove('token');
+    setMessage({ type: 'success', message: 'Token removed' });
+    setTimeout(() => {
+      setMessage({ type: 'success', message: '' });
+      window.close();
+    }, 700);
+  };
+
   return (
     <div style={{ padding: '1em', display: 'flex', justifyContent: 'center' }}>
       <ul>
@@ -58,6 +67,13 @@ export const Popup = () => {
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
             Set token
+          </button>
+          <button
+            type="button"
+            onClick={deleteToken}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Delete token
           </button>
         </li>
         <li>
