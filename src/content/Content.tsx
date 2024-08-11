@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useBucket } from '@extend-chrome/storage';
 import { runtime } from 'webextension-polyfill';
 
-const TARGET_HOSTNAMES = ['localhost'];
+const TARGET_HOSTNAMES = ['mgu-vbc-website.web.app', 'localhost'];
 const isTargetHostname = TARGET_HOSTNAMES.includes(window.location.hostname);
 
 export const Content = () => {
