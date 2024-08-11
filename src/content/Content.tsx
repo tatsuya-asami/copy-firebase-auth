@@ -88,6 +88,21 @@ export const Content = () => {
       return;
     }
     button.click();
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Find the Close button with the specified class
+    const closeButton = document.querySelector(
+      'button.btn.modal-btn.auth.btn-done.button'
+    ) as HTMLButtonElement | null;
+    if (!closeButton) {
+      console.log('Close button not found');
+      return;
+    }
+
+    // Click the Close button
+    closeButton.click();
+    console.log('Close button clicked');
   });
   return null;
 };
