@@ -29,7 +29,7 @@ export const Popup = () => {
       setTimeout(() => setMessage({ type: 'success', message: '' }), 5000);
       return;
     }
-    await runtime.sendMessage({ type: 'token-copied', token });
+    await runtime.sendMessage({ type: 'set-token' });
 
     setMessage({ type: 'success', message: 'Token set' });
     setTimeout(() => setMessage({ type: 'success', message: '' }), 5000);

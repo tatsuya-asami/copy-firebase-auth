@@ -55,7 +55,7 @@ export const Content = () => {
   }, [getToken]);
 
   runtime.onMessage.addListener(async (message) => {
-    if (message.type !== 'token-copied') {
+    if (message.type !== 'set-token') {
       return;
     }
     const authorizeOpenButton = document.querySelector(
@@ -74,8 +74,9 @@ export const Content = () => {
       console.log('element not found');
       return;
     }
+    const { token } = await bucket.get('token');
 
-    element.setAttribute('value', message.token);
+    element.setAttribute('value', token);
     // inputイベントを発火させないとクリックできない
     const event = new Event('input', { bubbles: true });
     element.dispatchEvent(event);
@@ -100,9 +101,7 @@ export const Content = () => {
       return;
     }
 
-    // Click the Close button
     closeButton.click();
-    console.log('Close button clicked');
   });
   return null;
 };

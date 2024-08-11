@@ -10,7 +10,7 @@ store.subscribe(() => {
 });
 
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-  if (message.type !== 'token-copied') {
+  if (message.type !== 'set-token') {
     return;
   }
   const tab = await tabs.query({ active: true, currentWindow: true });
@@ -18,7 +18,7 @@ browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (!tabId) {
     return;
   }
-  browser.tabs.sendMessage(tabId, { type: 'token-copied', token: message.token });
+  await browser.tabs.sendMessage(tabId, { type: 'set-token' });
   sendResponse();
 });
 
