@@ -19,7 +19,10 @@ export const Popup = () => {
     }
     await navigator.clipboard.writeText(token);
     setMessage({ type: 'success', message: 'Token copied' });
-    setTimeout(() => setMessage({ type: 'success', message: '' }), 5000);
+    setTimeout(() => {
+      setMessage({ type: 'success', message: '' });
+      window.close();
+    }, 700);
   };
 
   const setTokenToSwaggerUi = async () => {
@@ -32,7 +35,10 @@ export const Popup = () => {
     await runtime.sendMessage({ type: 'set-token' });
 
     setMessage({ type: 'success', message: 'Token set' });
-    setTimeout(() => setMessage({ type: 'success', message: '' }), 5000);
+    setTimeout(() => {
+      setMessage({ type: 'success', message: '' });
+      window.close();
+    }, 700);
   };
 
   return (
