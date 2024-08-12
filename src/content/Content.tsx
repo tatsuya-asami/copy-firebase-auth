@@ -74,8 +74,7 @@ export const Content = () => {
     authorizeOpenButton.click();
 
     await new Promise((resolve) => setTimeout(resolve, 100));
-
-    const element = document.getElementById('api_key_value') as HTMLInputElement | null;
+    const element = document.getElementById('auth-bearer-value') as HTMLInputElement | null;
     if (!element) {
       console.log('element not found');
       return;
